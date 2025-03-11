@@ -32,7 +32,7 @@ while true; do
         if [ -n "$last_write" ]; then
             time_diff=$(echo "$current_time - $last_write" | bc)
             if [ $(echo "$time_diff > 5" | bc) -eq 1 ]; then
-                psql -f "./get_cur_query" -o "$log_time.csv" --csv
+                psql -f "./get_cur_query.sql" -o "$log_time.csv" --csv
                 echo "Logging to $log_time.csv (time_diff: $time_diff s)"
                 echo "$current_time" > "$file"
             else
@@ -40,7 +40,7 @@ while true; do
             fi
         else
             # First run, no last_write
-            psql -f "./get_cur_query" -o "$log_time.csv" --csv
+            psql -f "./get_cur_query.sql" -o "$log_time.csv" --csv
             echo "First run, logging to $log_time.csv"
             echo "$current_time" > "$file"
         fi
